@@ -1,0 +1,22 @@
+<app-layout>
+  <div class="text-3xl font-bold mb-6 text-slate-800">Bienvenido, Administrador</div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-md transition">
+      <div class="text-lg text-slate-500 mb-2">Estudiantes Activos</div>
+      <div class="text-4xl font-bold text-cyan-500">{{ activeStudents }}</div>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-md transition">
+      <div class="text-lg text-slate-500 mb-2">Profesores</div>
+      <div class="text-4xl font-bold text-cyan-500">{{ teacherCount }}</div>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-md transition">
+      <div class="text-lg text-slate-500 mb-2">Matrículas Hoy</div>
+      <div class="text-4xl font-bold text-cyan-500">{{ enrollmentsToday }}</div>
+    </div>
+  </div>
+
+  <div class="mt-12 text-center text-slate-400 text-sm">
+    © 2025 La Pre del Valle. Todos los derechos reservados.
+  </div>
+</app-layout>

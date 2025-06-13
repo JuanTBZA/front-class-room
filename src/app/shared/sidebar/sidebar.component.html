@@ -1,0 +1,20 @@
+<aside class="w-64 bg-slate-800 text-white flex flex-col p-6 shadow-xl min-h-screen">
+  <h2 class="text-2xl font-bold text-cyan-400 text-center mb-8">📘 La Pre del Valle</h2>
+  <nav class="flex-1 space-y-2">
+    <a routerLink="/" class="block py-2 px-4 rounded hover:bg-slate-700">🏠 Dashboard</a>
+    <a routerLink="/users" class="block py-2 px-4 rounded hover:bg-slate-700">👥 Usuarios</a>
+
+    <div class="group">
+      <div class="block py-2 px-4 cursor-pointer rounded hover:bg-slate-700">📚 Académico ▾</div>
+      <div class="pl-4 hidden group-hover:block">
+        <a routerLink="/semesters" class="block py-1 px-4 rounded hover:bg-slate-700">📆 Semestres</a>
+        <a routerLink="/shifts" class="block py-1 px-4 rounded hover:bg-slate-700">🕘 Turnos</a>
+        <a routerLink="/courses" class="block py-1 px-4 rounded hover:bg-slate-700">📖 Cursos</a>
+      </div>
+    </div>
+
+    <a routerLink="/enrollments" class="block py-2 px-4 rounded hover:bg-slate-700">📝 Matrículas</a>
+    <a routerLink="/account" class="block py-2 px-4 rounded hover:bg-slate-700">⚙️ Cuenta</a>
+    <a routerLink="/logout" class="block py-2 px-4 rounded hover:bg-slate-700">🚪 Cerrar sesión</a>
+  </nav>
+</aside>
