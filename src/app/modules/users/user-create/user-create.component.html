@@ -1,0 +1,76 @@
+<div *ngIf="visible" class="fixed inset-0 flex justify-center items-center z-50 bg-white/80">
+  <div class="bg-white p-6 rounded-xl w-full max-w-lg shadow-xl relative border border-slate-300">
+    <h2 class="text-xl font-bold mb-4 text-slate-800">Agregar Usuario</h2>
+
+    <form (ngSubmit)="submit()" class="space-y-4">
+      <div class="flex gap-4">
+        <label class="flex-1">
+          <span class="text-sm font-medium">Nombre</span>
+          <input [(ngModel)]="name" name="name" required class="w-full border rounded px-3 py-2 mt-1" />
+        </label>
+
+        <label *ngIf="role === 'STUDENT'" class="flex-1">
+          <span class="text-sm font-medium">Apellido</span>
+          <input [(ngModel)]="lastName" name="lastName" required class="w-full border rounded px-3 py-2 mt-1" />
+        </label>
+      </div>
+
+      <label class="block">
+        <span class="text-sm font-medium">Correo</span>
+        <input [(ngModel)]="email" name="email" type="email" required class="w-full border rounded px-3 py-2 mt-1" />
+      </label>
+
+      <label class="block">
+        <span class="text-sm font-medium">DNI</span>
+        <input [(ngModel)]="dni" name="dni" required class="w-full border rounded px-3 py-2 mt-1" />
+      </label>
+
+      <label *ngIf="role === 'STUDENT'" class="block">
+        <span class="text-sm font-medium">Teléfono</span>
+        <input [(ngModel)]="phone" name="phone" required class="w-full border rounded px-3 py-2 mt-1" />
+      </label>
+
+      <label class="block">
+        <span class="text-sm font-medium">Rol</span>
+        <select [(ngModel)]="role" name="role" class="w-full border rounded px-3 py-2 mt-1">
+          <option value="STUDENT">Estudiante</option>
+          <option value="TEACHER">Profesor</option>
+        </select>
+      </label>
+
+      <div *ngIf="role === 'STUDENT'" class="space-y-2">
+        <label class="block">
+          <span class="text-sm font-medium">Sede Universitaria</span>
+          <input [(ngModel)]="universityHeadquarters" name="universityHeadquarters" class="w-full border rounded px-3 py-2 mt-1" />
+        </label>
+        <label class="block">
+          <span class="text-sm font-medium">Carrera Deseada</span>
+          <input [(ngModel)]="intendedMajor" name="intendedMajor" class="w-full border rounded px-3 py-2 mt-1" />
+        </label>
+      </div>
+
+      <div *ngIf="role === 'TEACHER'" class="space-y-2">
+        <label class="block">
+          <span class="text-sm font-medium">Especialización</span>
+          <input [(ngModel)]="specialization" name="specialization" class="w-full border rounded px-3 py-2 mt-1" />
+        </label>
+
+        <div class="flex gap-4">
+          <label class="flex-1">
+            <span class="text-sm font-medium">Inicio Contrato</span>
+            <input type="date" [(ngModel)]="contractDateStart" name="contractDateStart" class="w-full border rounded px-3 py-2 mt-1" />
+          </label>
+          <label class="flex-1">
+            <span class="text-sm font-medium">Fin Contrato</span>
+            <input type="date" [(ngModel)]="contractDateEnd" name="contractDateEnd" class="w-full border rounded px-3 py-2 mt-1" />
+          </label>
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 pt-4">
+        <button type="button" (click)="close()" class="px-4 py-2 bg-slate-200 rounded">Cancelar</button>
+        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<app-layout>
+  <!-- Título y botón agregar -->
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold text-slate-800">Gestión de Usuarios</h1>
+    <button (click)="modalVisible = true" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded text-sm">
+      + Agregar Usuario
+    </button>
+  </div>
+
+  <!-- Filtros y orden -->
+  <form (submit)="onSearch($event)" class="flex flex-wrap gap-4 mb-6 items-end">
+    <input
+      type="text"
+      [(ngModel)]="filtro"
+      name="filtro"
+      placeholder="Buscar por nombre o DNI"
+      class="border border-slate-300 rounded px-4 py-2 w-full max-w-xs text-sm"
+    />
+
+    <select [(ngModel)]="orderBy" name="orderBy" class="px-4 py-2 border border-slate-300 rounded text-sm">
+      <option value="dni">Ordenar por DNI</option>
+      <option value="name">Ordenar por Nombre</option>
+    </select>
+
+    <select [(ngModel)]="orderDir" name="orderDir" class="px-4 py-2 border border-slate-300 rounded text-sm">
+      <option value="asc">Ascendente</option>
+      <option value="desc">Descendente</option>
+    </select>
+
+    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded text-sm">Buscar</button>
+  </form>
+
+  <!-- Tabla de usuarios -->
+  <div class="bg-white rounded-xl shadow p-6 overflow-x-auto">
+    <table class="w-full border-collapse text-sm">
+      <thead>
+        <tr class="bg-slate-100 text-slate-600 text-left">
+          <th class="py-3 px-4">Nombre</th>
+          <th class="py-3 px-4">Correo</th>
+          <th class="py-3 px-4">DNI</th>
+          <th class="py-3 px-4">Rol</th>
+          <th class="py-3 px-4">Estado</th>
+          <th class="py-3 px-4">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users" class="border-b hover:bg-slate-50">
+          <td class="py-2 px-4">{{ user.name }}</td>
+          <td class="py-2 px-4">{{ user.email }}</td>
+          <td class="py-2 px-4">{{ user.dni }}</td>
+          <td class="py-2 px-4">{{ getRolNombre(user.role) }}</td>
+          <td class="py-2 px-4">
+            <span
+              [ngClass]="{
+                'bg-green-100 text-green-700': user.enabled,
+                'bg-red-100 text-red-700': !user.enabled
+              }"
+              class="px-3 py-1 rounded-full font-semibold text-xs"
+            >
+              {{ user.enabled ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+          <td class="py-2 px-4 space-x-2">
+            <button class="bg-yellow-300 hover:bg-yellow-400 text-yellow-900 text-xs px-3 py-1 rounded">Editar</button>
+            <button class="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Total de resultados -->
+    <div class="mt-4 text-sm text-slate-600">
+      Mostrando {{ users.length }} de {{ totalElements }} usuarios encontrados
+    </div>
+
+    <!-- Paginación -->
+    <div class="mt-4 flex justify-end items-center gap-4 text-sm">
+      <button
+        (click)="cambiarPagina(-1)"
+        [disabled]="page === 0"
+        class="px-3 py-1 bg-slate-200 rounded disabled:opacity-50"
+      >
+        Anterior
+      </button>
+      <span>Página {{ page + 1 }}</span>
+      <button
+        (click)="cambiarPagina(1)"
+        [disabled]="!hasNextPage()"
+        class="px-3 py-1 bg-slate-200 rounded disabled:opacity-50"
+      >
+        Siguiente
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal para crear usuario -->
+  <app-user-create [visible]="modalVisible"></app-user-create>
+</app-layout>
