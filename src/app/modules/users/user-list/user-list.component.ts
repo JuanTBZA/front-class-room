@@ -20,6 +20,8 @@ export class UserListComponent {
   size = 5;
   totalElements = 0;
 
+  toastVisible = false;
+
   orderBy: 'dni' | 'name' = 'dni';
   orderDir: 'asc' | 'desc' = 'desc';
 
@@ -69,8 +71,20 @@ export class UserListComponent {
     return (this.page + 1) * this.size < this.totalElements;
   }
 
-  onModalClose() {
-    this.modalVisible = false;
-    this.fetchUsers(); 
-  }
+  abrirModal() {
+  this.modalVisible = false;
+  setTimeout(() => this.modalVisible = true, 0);
+}
+
+onModalClose() {
+  this.modalVisible = false;
+  this.toastVisible = true;
+  this.fetchUsers(); // actualiza la tabla
+
+  // Oculta el mensaje luego de 3 segundos
+  setTimeout(() => {
+    this.toastVisible = false;
+  }, 3000);
+}
+
 }

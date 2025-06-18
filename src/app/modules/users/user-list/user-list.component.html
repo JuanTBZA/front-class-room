@@ -1,4 +1,9 @@
 <app-layout>
+
+  <!-- Toast de éxito -->
+<div *ngIf="toastVisible" class="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded shadow-lg text-sm z-50"> Usuario agregado correctamente </div>
+
+
   <!-- Título y botón agregar -->
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-bold text-slate-800">Gestión de Usuarios</h1>
@@ -94,5 +99,9 @@
   </div>
 
   <!-- Modal para crear usuario -->
-  <app-user-create [visible]="modalVisible"></app-user-create>
+  <app-user-create
+  [visible]="modalVisible"
+  (closed)="onModalClose()"
+></app-user-create>
+
 </app-layout>

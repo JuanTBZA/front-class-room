@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   standalone: true,
@@ -55,7 +56,7 @@ export class UserCreateComponent {
         intendedMajor: this.intendedMajor,
       };
 
-      this.http.post('/api/students', body).subscribe(() => {
+      this.http.post(`${environment.apiUrl}/students`, body).subscribe(() => {
         this.closed.emit();
         this.resetForm();
       });
@@ -67,7 +68,7 @@ export class UserCreateComponent {
         specialization: this.specialization,
       };
 
-      this.http.post('/api/teachers', body).subscribe(() => {
+      this.http.post(`${environment.apiUrl}/teachers`, body).subscribe(() => {
         this.closed.emit();
         this.resetForm();
       });
