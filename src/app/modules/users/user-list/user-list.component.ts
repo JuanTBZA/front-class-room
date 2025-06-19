@@ -4,11 +4,18 @@ import { FormsModule } from '@angular/forms';
 import { UserService, User } from 'src/app/core/services/user.service';
 import { LayoutComponent } from 'src/app/shared/layout/layout.component';
 import { UserCreateComponent } from 'src/app/modules/users/user-create/user-create.component';
+import { TeacherEditComponent } from 'src/app/modules/teacher/teacher-edit/teacher-edit.component';
 
 @Component({
   standalone: true,
   selector: 'app-user-list',
-  imports: [CommonModule, FormsModule, LayoutComponent, UserCreateComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    LayoutComponent,
+    UserCreateComponent,
+    TeacherEditComponent
+  ],
   templateUrl: './user-list.component.html',
 })
 export class UserListComponent {
@@ -25,7 +32,12 @@ export class UserListComponent {
   orderBy: 'dni' | 'name' = 'dni';
   orderDir: 'asc' | 'desc' = 'desc';
 
+  // Crear usuario
   modalVisible = false;
+
+  // Editar profesor
+  modalEditarVisible = false;
+  teacherIdEditar?: number;
 
   ngOnInit() {
     this.fetchUsers();
@@ -72,22 +84,32 @@ export class UserListComponent {
   }
 
   abrirModal() {
-  this.modalVisible = false;
-  setTimeout(() => this.modalVisible = true, 0);
-}
-
-onModalClose(usuarioCreado: boolean) {
-  this.modalVisible = false;
-
-  if (usuarioCreado) {
-    this.toastVisible = true;
-    this.fetchUsers(); // recargar tabla
-
-    setTimeout(() => {
-      this.toastVisible = false;
-    }, 3000);
+    this.modalVisible = false;
+    setTimeout(() => this.modalVisible = true, 0);
   }
-}
 
+  onModalClose(usuarioCreado: boolean) {
+    this.modalVisible = false;
 
+    if (usuarioCreado) {
+      this.toastVisible = true;
+      this.fetchUsers();
+
+      setTimeout(() => {
+        this.toastVisible = false;
+      }, 3000);
+    }
+  }
+
+  abrirEditar(id: number) {
+    this.teacherIdEditar = id;
+    this.modalEditarVisible = true;
+  }
+
+  cerrarEditarModal(guardado: boolean) {
+    this.modalEditarVisible = false;
+    if (guardado) {
+      this.fetchUsers();
+    }
+  }
 }
