@@ -99,9 +99,10 @@
   </div>
 
   <!-- Modal para crear usuario -->
-  <app-user-create
+<app-user-create
   [visible]="modalVisible"
-  (closed)="onModalClose()"
+  (closed)="onModalClose($event)"
 ></app-user-create>
+
 
 </app-layout>

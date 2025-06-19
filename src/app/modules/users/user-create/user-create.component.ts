@@ -14,7 +14,7 @@ export class UserCreateComponent {
   private http = inject(HttpClient);
 
   @Input() visible = false;
-  @Output() closed = new EventEmitter<void>();
+@Output() closed = new EventEmitter<boolean>();
 
   role: 'STUDENT' | 'TEACHER' = 'STUDENT';
 
@@ -56,10 +56,11 @@ export class UserCreateComponent {
         intendedMajor: this.intendedMajor,
       };
 
-      this.http.post(`${environment.apiUrl}/students`, body).subscribe(() => {
-        this.closed.emit();
-        this.resetForm();
-      });
+this.http.post(`${environment.apiUrl}/students`, body).subscribe(() => {
+  this.closed.emit(true);
+  this.resetForm();
+});
+
     } else {
       const body = {
         userRequestDto,
@@ -69,8 +70,9 @@ export class UserCreateComponent {
       };
 
       this.http.post(`${environment.apiUrl}/teachers`, body).subscribe(() => {
-        this.closed.emit();
-        this.resetForm();
+        this.closed.emit(false); // no se creó
+this.resetForm();
+
       });
     }
   }

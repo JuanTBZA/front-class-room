@@ -76,15 +76,18 @@ export class UserListComponent {
   setTimeout(() => this.modalVisible = true, 0);
 }
 
-onModalClose() {
+onModalClose(usuarioCreado: boolean) {
   this.modalVisible = false;
-  this.toastVisible = true;
-  this.fetchUsers(); // actualiza la tabla
 
-  // Oculta el mensaje luego de 3 segundos
-  setTimeout(() => {
-    this.toastVisible = false;
-  }, 3000);
+  if (usuarioCreado) {
+    this.toastVisible = true;
+    this.fetchUsers(); // recargar tabla
+
+    setTimeout(() => {
+      this.toastVisible = false;
+    }, 3000);
+  }
 }
+
 
 }
