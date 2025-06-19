@@ -5,6 +5,7 @@ import { UserService, User } from 'src/app/core/services/user.service';
 import { LayoutComponent } from 'src/app/shared/layout/layout.component';
 import { UserCreateComponent } from 'src/app/modules/users/user-create/user-create.component';
 import { TeacherEditComponent } from 'src/app/modules/teacher/teacher-edit/teacher-edit.component';
+import { StudentEditComponent } from 'src/app/modules/student/student-edit/student-edit.component';
 
 @Component({
   standalone: true,
@@ -14,7 +15,8 @@ import { TeacherEditComponent } from 'src/app/modules/teacher/teacher-edit/teach
     FormsModule,
     LayoutComponent,
     UserCreateComponent,
-    TeacherEditComponent
+    TeacherEditComponent,
+    StudentEditComponent 
   ],
   templateUrl: './user-list.component.html',
 })
@@ -38,6 +40,22 @@ export class UserListComponent {
   // Editar profesor
   modalEditarVisible = false;
   teacherIdEditar?: number;
+
+  modalEditarEstudianteVisible = false;
+studentUserIdEditar?: number;
+
+abrirEditarEstudiante(userId: number) {
+  this.studentUserIdEditar = userId;
+  this.modalEditarEstudianteVisible = true;
+}
+
+cerrarEditarEstudianteModal(guardado: boolean) {
+  this.modalEditarEstudianteVisible = false;
+  if (guardado) {
+    this.fetchUsers();
+  }
+}
+
 
   ngOnInit() {
     this.fetchUsers();

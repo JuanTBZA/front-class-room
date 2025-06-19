@@ -65,17 +65,27 @@
               {{ user.enabled ? 'Activo' : 'Inactivo' }}
             </span>
           </td>
-          <td class="py-2 px-4 space-x-2">
-            <button
-  *ngIf="user.role === 'ROLE_TEACHER'"
-  (click)="abrirEditar(user.id)"
-  class="bg-yellow-300 hover:bg-yellow-400 text-yellow-900 text-xs px-3 py-1 rounded"
->
-  Editar
-</button>
+            <td class="py-2 px-4 space-x-2">
+              <button
+                *ngIf="user.role === 'ROLE_TEACHER'"
+                (click)="abrirEditar(user.id)"
+                class="bg-yellow-300 hover:bg-yellow-400 text-yellow-900 text-xs px-3 py-1 rounded"
+              >
+                Editar
+              </button>
 
-            <button class="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded">Eliminar</button>
-          </td>
+              <button
+                *ngIf="user.role === 'ROLE_STUDENT'"
+                (click)="abrirEditarEstudiante(user.id)"
+                class="bg-yellow-300 hover:bg-yellow-400 text-yellow-900 text-xs px-3 py-1 rounded"
+              >
+                Editar
+              </button>
+
+
+              <button class="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded">Eliminar</button>
+            </td>
+
         </tr>
       </tbody>
     </table>
@@ -117,5 +127,13 @@
   [teacherId]="teacherIdEditar"
   (closed)="cerrarEditarModal($event)"
 ></app-teacher-edit>
+
+<!-- Modal para editar estudiante -->
+<app-student-edit
+  [visible]="modalEditarEstudianteVisible"
+  [userId]="studentUserIdEditar"
+  (closed)="cerrarEditarEstudianteModal($event)"
+></app-student-edit>
+
 
 </app-layout>

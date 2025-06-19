@@ -1,0 +1,62 @@
+<!-- Modal de edición para estudiante -->
+<div *ngIf="visible" class="fixed inset-0 flex justify-center items-center z-50 bg-white/80">
+
+  <div class="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 relative">
+    <!-- Botón de cerrar -->
+    <button
+      class="absolute top-3 right-3 text-slate-400 hover:text-slate-600 text-lg"
+      (click)="close()"
+    >
+      ✕
+    </button>
+
+    <h2 class="text-xl font-semibold text-slate-800 mb-4">Editar Estudiante</h2>
+
+    <form (ngSubmit)="submit()" class="grid grid-cols-1 gap-4 text-sm">
+      <!-- Nombre -->
+      <div>
+        <label class="block mb-1 text-slate-600">Nombre</label>
+        <input [(ngModel)]="name" name="name" class="w-full border border-slate-300 rounded px-3 py-2" />
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label class="block mb-1 text-slate-600">Email</label>
+        <input [(ngModel)]="email" name="email" type="email" class="w-full border border-slate-300 rounded px-3 py-2" />
+      </div>
+
+      <!-- DNI -->
+      <div>
+        <label class="block mb-1 text-slate-600">DNI</label>
+        <input [(ngModel)]="dni" name="dni" class="w-full border border-slate-300 rounded px-3 py-2" />
+      </div>
+
+      <!-- Habilitado -->
+      <div>
+        <label class="block mb-1 text-slate-600">Estado</label>
+        <select [(ngModel)]="enabled" name="enabled" class="w-full border border-slate-300 rounded px-3 py-2">
+          <option [ngValue]="true">Activo</option>
+          <option [ngValue]="false">Inactivo</option>
+        </select>
+      </div>
+
+      <!-- Sede universitaria -->
+      <div>
+        <label class="block mb-1 text-slate-600">Sede Universitaria</label>
+        <input [(ngModel)]="universityHeadquarters" name="universityHeadquarters" class="w-full border border-slate-300 rounded px-3 py-2" />
+      </div>
+
+      <!-- Carrera -->
+      <div>
+        <label class="block mb-1 text-slate-600">Carrera o Especialidad</label>
+        <input [(ngModel)]="intendedMajor" name="intendedMajor" class="w-full border border-slate-300 rounded px-3 py-2" />
+      </div>
+
+      <!-- Botones -->
+      <div class="flex justify-end gap-3 pt-2">
+        <button type="button" (click)="close()" class="bg-slate-200 hover:bg-slate-300 px-4 py-2 rounded text-sm">Cancelar</button>
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
