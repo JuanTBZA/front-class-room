@@ -6,6 +6,9 @@ import { LayoutComponent } from 'src/app/shared/layout/layout.component';
 import { UserCreateComponent } from 'src/app/modules/users/user-create/user-create.component';
 import { TeacherEditComponent } from 'src/app/modules/teacher/teacher-edit/teacher-edit.component';
 import { StudentEditComponent } from 'src/app/modules/student/student-edit/student-edit.component';
+import { StudentService } from 'src/app/core/services/student.service';
+import { TeacherService } from 'src/app/core/services/teacher.service';
+
 
 @Component({
   standalone: true,
@@ -44,6 +47,10 @@ export class UserListComponent {
   modalEditarEstudianteVisible = false;
 studentUserIdEditar?: number;
 
+private studentService = inject(StudentService);
+private teacherService = inject(TeacherService);
+
+
 abrirEditarEstudiante(userId: number) {
   this.studentUserIdEditar = userId;
   this.modalEditarEstudianteVisible = true;
@@ -61,17 +68,40 @@ cerrarEditarEstudianteModal(guardado: boolean) {
     this.fetchUsers();
   }
 
-  fetchUsers() {
-    this.userService
-      .getUsers(this.filtro, this.page, this.size, this.orderBy, this.orderDir)
-      .subscribe({
-        next: (res) => {
+fetchUsers() {
+  this.userService
+    .getUsers(this.filtro, this.page, this.size, this.orderBy, this.orderDir)
+    .subscribe({
+      next: (res) => {
+        if (!res || !res.content || res.content.length === 0) {
+          // Si la página actual está vacía y no es la primera, retroceder
+          if (this.page > 0) {
+            this.page--;
+            this.fetchUsers(); // volver a intentar
+          } else {
+            this.users = [];
+            this.totalElements = 0;
+          }
+        } else {
           this.users = res.content;
           this.totalElements = res.totalElements;
-        },
-        error: (err) => console.error('Error al cargar usuarios', err),
-      });
-  }
+        }
+      },
+      error: (err) => {
+        if (err.status === 204) {
+          this.users = [];
+          this.totalElements = 0;
+          if (this.page > 0) {
+            this.page--;
+            this.fetchUsers();
+          }
+        } else {
+          console.error('Error al cargar usuarios', err);
+        }
+      },
+    });
+}
+
 
   onSearch(event: Event) {
     event.preventDefault();
@@ -130,4 +160,20 @@ cerrarEditarEstudianteModal(guardado: boolean) {
       this.fetchUsers();
     }
   }
+
+  eliminarUsuario(user: User) {
+    
+  if (user.role === 'ROLE_STUDENT') {
+    this.studentService.deleteStudent(user.id).subscribe(() => {
+      this.fetchUsers();
+    });
+  } else if (user.role === 'ROLE_TEACHER') {
+    this.teacherService.deleteTeacher(user.id).subscribe(() => {
+      this.fetchUsers();
+    });
+  } else {
+    console.warn('Este tipo de usuario no se puede eliminar');
+  }
+}
+
 }

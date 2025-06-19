@@ -15,4 +15,9 @@ export class StudentService {
   updateStudent(id: number, data: any) {
     return this.http.put(`${this.api}/${id}`, data);
   }
+
+  deleteStudent(id: number) {
+  return this.http.delete(`${this.api}/${id}`);
+}
+
 }

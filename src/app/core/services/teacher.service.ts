@@ -14,4 +14,8 @@ getTeacherByUserId(userId: number) {
   updateTeacher(id: number, data: any) {
     return this.http.put(`${this.api}/${id}`, data);
   }
+  deleteTeacher(id: number) {
+  return this.http.delete(`${this.api}/${id}`);
+}
+
 }
