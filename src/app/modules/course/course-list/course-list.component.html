@@ -1,10 +1,66 @@
-<div class="p-6">
-  <h1 class="text-2xl font-bold mb-4">Listado de Cursos</h1>
+<app-layout>
+  <!-- Título -->
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold text-slate-800">Gestión de Cursos</h1>
+  </div>
 
-  <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-    <div *ngFor="let course of courses" class="bg-white p-4 rounded shadow">
-      <h2 class="text-xl font-semibold text-blue-700">{{ course.name }}</h2>
-      <p class="text-gray-600 mt-2">{{ course.description }}</p>
+  <!-- Filtro y orden -->
+  <form (submit)="onSearch($event)" class="flex flex-wrap gap-4 mb-6 items-end">
+    <input
+      type="text"
+      [(ngModel)]="filtro"
+      name="filtro"
+      placeholder="Buscar por nombre"
+      class="border border-slate-300 rounded px-4 py-2 w-full max-w-xs text-sm"
+    />
+
+    <select [(ngModel)]="orderDir" name="orderDir" class="px-4 py-2 border border-slate-300 rounded text-sm">
+      <option value="asc">Ascendente</option>
+      <option value="desc">Descendente</option>
+    </select>
+
+    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded text-sm">Buscar</button>
+  </form>
+
+  <!-- Tabla -->
+  <div class="bg-white rounded-xl shadow p-6 overflow-x-auto">
+    <table class="w-full border-collapse text-sm">
+      <thead>
+        <tr class="bg-slate-100 text-slate-600 text-left">
+          <th class="py-3 px-4">Nombre</th>
+          <th class="py-3 px-4">Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let course of courses" class="border-b hover:bg-slate-50">
+          <td class="py-2 px-4">{{ course.name }}</td>
+          <td class="py-2 px-4">{{ course.description }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Total -->
+    <div class="mt-4 text-sm text-slate-600">
+      Mostrando {{ courses.length }} de {{ totalElements }} cursos encontrados
+    </div>
+
+    <!-- Paginación -->
+    <div class="mt-4 flex justify-end items-center gap-4 text-sm">
+      <button
+        (click)="cambiarPagina(-1)"
+        [disabled]="page === 0"
+        class="px-3 py-1 bg-slate-200 rounded disabled:opacity-50"
+      >
+        Anterior
+      </button>
+      <span>Página {{ page + 1 }}</span>
+      <button
+        (click)="cambiarPagina(1)"
+        [disabled]="!hasNextPage()"
+        class="px-3 py-1 bg-slate-200 rounded disabled:opacity-50"
+      >
+        Siguiente
+      </button>
     </div>
   </div>
-</div>
+</app-layout>

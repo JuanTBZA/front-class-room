@@ -10,5 +10,8 @@ export const routes: Routes = [
     path: 'users',
     loadChildren: () =>
       import('./modules/users/user.routes').then(m => m.USER_ROUTES)
-  }
+    
+  },
+  { path: 'courses', loadComponent: () => import('./modules/course/course-list/course-list.component').then(m => m.CourseListComponent) }
+
 ];

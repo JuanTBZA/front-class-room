@@ -1,6 +1,6 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 export interface Course {
   id: number;
@@ -8,12 +8,27 @@ export interface Course {
   description: string;
 }
 
+export interface CourseResponse {
+  content: Course[];
+  totalElements: number;
+  page: number;
+  size: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class CourseService {
-  private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/courses'; // Ajusta si usas otra URL
+  private api = `${environment.apiUrl}/courses`;
 
-  getAllCourses(): Observable<Course[]> {
-    return this.http.get<Course[]>(this.apiUrl);
+  constructor(private http: HttpClient) {}
+
+  getCourses(filtro: string, page: number, size: number, orderBy: string, orderDir: string) {
+    const params = new URLSearchParams({
+      filtro,
+      page: String(page),
+      size: String(size),
+      orderBy,
+      orderDir
+    });
+    return this.http.get<CourseResponse>(`${this.api}/paginated?${params.toString()}`);
   }
 }

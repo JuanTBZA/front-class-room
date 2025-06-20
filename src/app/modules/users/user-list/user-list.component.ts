@@ -29,7 +29,7 @@ export class UserListComponent {
   users: User[] = [];
   filtro = '';
   page = 0; // base cero
-  size = 5;
+  size = 10;
   totalElements = 0;
 
   toastVisible = false;
