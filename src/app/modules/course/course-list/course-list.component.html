@@ -1,7 +1,8 @@
 <app-layout>
-  <!-- Título -->
+  <!-- Título y botón agregar -->
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-bold text-slate-800">Gestión de Cursos</h1>
+    <button class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded text-sm">+ Agregar Curso</button>
   </div>
 
   <!-- Filtro y orden -->
@@ -29,12 +30,17 @@
         <tr class="bg-slate-100 text-slate-600 text-left">
           <th class="py-3 px-4">Nombre</th>
           <th class="py-3 px-4">Descripción</th>
+          <th class="py-3 px-4">Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let course of courses" class="border-b hover:bg-slate-50">
           <td class="py-2 px-4">{{ course.name }}</td>
           <td class="py-2 px-4">{{ course.description }}</td>
+          <td class="py-2 px-4 space-x-2">
+            <button class="bg-yellow-300 hover:bg-yellow-400 text-yellow-900 text-xs px-3 py-1 rounded">Editar</button>
+            <button class="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded">Eliminar</button>
+          </td>
         </tr>
       </tbody>
     </table>
