@@ -21,7 +21,7 @@ export interface PaginatedResponse<T> {
 @Injectable({ providedIn: 'root' })
 export class UserService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/users';
+  private apiUrl = 'http://20.83.153.166:8080/api/users';
 
   getUsers(
     filtro: string = '',
